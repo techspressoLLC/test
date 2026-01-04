@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCT-SE Students Festival | Official Site</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0c;
+            --accent-cyan: #00f2ff;
+            --accent-pink: #ff007a;
+            --accent-yellow: #fff200;
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        .font-en { font-family: 'Montserrat', sans-serif; }
+
+        /* 背景グリッド */
+        .bg-grid {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* グラスモーフィズム */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* グラデーションテキスト */
+        .text-gradient {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* スクロールアニメーション用 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ドロップダウンメニュー */
+        .dropdown-content {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            background: rgba(15, 15, 20, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .group:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* モバイルメニュー */
+        #mobile-menu {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+            background: rgba(15, 15, 20, 0.98);
+            backdrop-filter: blur(30px);
+        }
+        #mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-grid">
+
+    <!-- ナビゲーションヘッダー -->
+    <header class="fixed w-full z-50 transition-all duration-500 px-4 md:px-6 py-4" id="header">
+        <nav class="container mx-auto flex justify-between items-center glass rounded-full px-4 md:px-8 py-3 relative">
+            <div class="flex items-center space-x-2 shrink-0 mr-4">
+                <div class="w-7 h-7 bg-gradient-to-tr from-cyan-400 to-pink-500 rounded-md shadow-lg shadow-cyan-500/20"></div>
+                <span class="font-en font-black text-sm md:text-lg tracking-tighter text-white uppercase italic">ISCT-SE</span>
+            </div>
+
+            <div class="hidden sm:flex flex-1 justify-center space-x-0 md:space-x-1 text-[9px] font-bold tracking-[0.2em] uppercase h-full items-center">
+                <div class="relative group px-2 md:px-4 py-2">
+                    <button class="hover:text-cyan-400 transition flex items-center gap-1">Event <svg class="w-2.5 h-2.5 opacity-50 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <div class="dropdown-content absolute left-1/2 -translate-x-1/2 mt-4 w-64 md:w-72 rounded-2xl p-3 shadow-2xl">
+                        <div class="grid grid-cols-1 gap-1 text-left">
+                            <a href="#contents" class="block px-4 py-3 rounded-xl hover:bg-white/10 transition group/item"><span class="block font-bold text-white group-hover/item:text-cyan-400 normal-case tracking-normal">Contents Grid</span><span class="text-[9px] opacity-40 normal-case tracking-normal block mt-1">展示・ステージプログラムの一覧</span></a>
+                            <a href="#timetable" class="block px-4 py-3 rounded-xl hover:bg-white/10 transition group/item"><span class="block font-bold text-white group-hover/item:text-cyan-400 normal-case tracking-normal">Timetable</span><span class="text-[9px] opacity-40 normal-case tracking-normal block mt-1">当日のタイムスケジュール</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group px-2 md:px-4 py-2">
+                    <button class="hover:text-cyan-400 transition flex items-center gap-1">Guide <svg class="w-2.5 h-2.5 opacity-50 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <div class="dropdown-content absolute left-1/2 -translate-x-1/2 mt-4 w-64 md:w-72 rounded-2xl p-3 shadow-2xl">
+                        <div class="grid grid-cols-1 gap-1 text-left">
+                            <a href="#access" class="block px-4 py-3 rounded-xl hover:bg-white/10 transition group/item"><span class="block font-bold text-white group-hover/item:text-pink-400 normal-case tracking-normal">Access Map</span><span class="text-[9px] opacity-40 normal-case tracking-normal block mt-1">会場へのアクセス方法</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group px-2 md:px-4 py-2">
+                    <button class="hover:text-cyan-400 transition flex items-center gap-1">About <svg class="w-2.5 h-2.5 opacity-50 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <div class="dropdown-content absolute left-1/2 -translate-x-1/2 mt-4 w-64 md:w-72 rounded-2xl p-3 shadow-2xl">
+                        <div class="grid grid-cols-1 gap-1 text-left">
+                            <a href="#about" class="block px-4 py-3 rounded-xl hover:bg-white/10 transition group/item"><span class="block font-bold text-white group-hover/item:text-yellow-400 normal-case tracking-normal">Concept</span><span class="text-[9px] opacity-40 normal-case tracking-normal block mt-1">フェスティバルの目的と想い</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2 md:space-x-4 shrink-0 ml-4">
+                <a href="#" class="bg-white text-black text-[9px] md:text-[10px] font-black px-4 md:px-6 py-2 rounded-full hover:bg-cyan-400 transition transform hover:scale-105 duration-300">ENTRY</a>
+                <button id="menu-toggle" class="sm:hidden text-white p-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute top-1/4 -left-20 w-80 h-80 bg-cyan-600/10 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-pink-600/10 rounded-full blur-[100px]"></div>
+        <div class="container mx-auto px-6 text-center z-10">
+            <div class="reveal active">
+                <span class="font-en text-cyan-400 font-bold tracking-[0.4em] text-[10px] mb-6 block uppercase">Beyond the Border 2024</span>
+                <h1 class="text-5xl md:text-[10rem] font-en font-black mb-10 tracking-tighter leading-none select-none italic uppercase">BEYOND THE<br><span class="text-gradient">BORDER.</span></h1>
+                <p class="text-gray-400 max-w-2xl mx-auto leading-loose text-sm md:text-base tracking-wide">情報科学専門学校の学生たちが創り出す、技術と創造力の祭典。<br class="hidden md:block">常識を超えた、新しい可能性に触れる2日間。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aboutセクション -->
+    <section id="about" class="py-32 px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-5xl font-en font-black mb-8 tracking-tighter uppercase">ABOUT THE <span class="text-cyan-400">FESTIVAL</span></h2>
+                <div class="glass p-10 rounded-[2rem] text-left shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-6 text-white">開催趣旨</h3>
+                    <p class="text-gray-400 leading-loose mb-6">本フェスティバルは、情報科学専門学校（ISCT-SE）の学生が日頃の学習成果を社会に問い、新しいテクノロジーの可能性を追求する場として開催されます。</p>
+                    <p class="text-gray-400 leading-loose">エンジニアリング、デザイン、ビジネス。それぞれの領域が交差する瞬間に生まれる「熱量」を、ぜひ会場で体感してください。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsセクション -->
+    <section id="news" class="py-24 px-6 relative z-10 bg-white/5">
+        <div class="container mx-auto max-w-4xl">
+            <div class="flex items-center justify-between mb-12 reveal">
+                <h2 class="text-2xl font-black font-en tracking-tighter italic uppercase">News / Updates</h2>
+                <a href="#" class="text-[10px] font-bold tracking-widest opacity-40 hover:opacity-100 transition">VIEW ALL →</a>
+            </div>
+            <div class="space-y-4">
+                <a href="#" class="reveal block glass p-6 rounded-2xl group hover:bg-white/5 transition duration-500 shadow-lg">
+                    <div class="flex flex-col md:flex-row md:items-center gap-4 text-left">
+                        <span class="text-[10px] font-en font-bold text-gray-500 w-24 tracking-widest">2024.10.20</span>
+                        <span class="bg-cyan-500/10 text-cyan-400 text-[9px] font-bold px-3 py-1 rounded-full w-fit">INFO</span>
+                        <p class="flex-1 font-bold text-sm group-hover:text-cyan-400 transition text-white">タイムスケジュールの詳細を公開しました。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timetableセクション -->
+    <section id="timetable" class="py-32 px-6">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-xs font-en font-black tracking-[0.6em] text-cyan-500 mb-4 uppercase">Timetable</h2>
+                <h3 class="text-4xl font-black">当日の流れ</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <div class="reveal">
+                    <h4 class="text-xl font-black mb-8 border-b border-white/10 pb-4 flex justify-between items-center text-white italic font-en"><span>DAY 1</span><span class="text-[10px] font-normal opacity-40 tracking-widest">11.02 SAT</span></h4>
+                    <ul class="space-y-8"><li class="flex gap-6 relative"><span class="text-xs font-en font-bold text-cyan-400 shrink-0 pt-1">10:00</span><div><p class="font-bold text-sm text-white">Opening Ceremony</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Main Hall</p></div></li></ul>
+                </div>
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <h4 class="text-xl font-black mb-8 border-b border-white/10 pb-4 flex justify-between items-center text-white italic font-en"><span>DAY 2</span><span class="text-[10px] font-normal opacity-40 tracking-widest">11.03 SUN</span></h4>
+                    <ul class="space-y-8"><li class="flex gap-6"><span class="text-xs font-en font-bold text-pink-400 shrink-0 pt-1">10:00</span><div><p class="font-bold text-sm text-white">Tech Workshops</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Lab Room 302</p></div></li></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contentsセクション -->
+    <section id="contents" class="py-32 px-6 relative bg-white/5">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 reveal">
+                <div class="text-left">
+                    <h2 class="text-xs font-en font-black tracking-[0.6em] text-pink-500 mb-4 uppercase">Programs</h2>
+                    <h3 class="text-5xl font-black font-en tracking-tighter italic uppercase leading-none">Contents Grid</h3>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <div class="md:col-span-8 glass rounded-[2.5rem] overflow-hidden relative group reveal">
+                    <div class="h-80 md:h-[500px] relative text-left">
+                        <img src="https://images.unsplash.com/photo-1478416272538-5f7e51dc5400?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover opacity-40 group-hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 p-10 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/20 to-transparent">
+                            <span class="text-cyan-400 font-bold text-[10px] tracking-widest mb-3 uppercase">Exhibition</span>
+                            <h4 class="text-3xl md:text-5xl font-black mb-4 font-en tracking-tight text-white uppercase italic">Virtual Reality</h4>
+                            <p class="text-gray-400 text-xs max-w-md leading-relaxed">次世代のVR体験を学生たちが独自に構築。視覚と感覚の境界を揺さぶる、革新的なインタラクティブ・アート。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-4 glass rounded-[2.5rem] overflow-hidden group reveal" style="transition-delay: 0.1s;">
+                    <div class="h-80 md:h-full relative text-left">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover opacity-30 group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 p-10 flex flex-col justify-end">
+                            <span class="text-pink-400 font-bold text-[10px] tracking-widest mb-2 uppercase text-white uppercase">Coding Competition</span>
+                            <h4 class="text-2xl font-black font-en tracking-tight uppercase text-white italic">Code Battle 2024</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新しいフッターセクション (再現依頼部分) -->
+    <footer class="bg-black pt-32 pb-16 px-6 border-t border-white/5 relative overflow-hidden">
+        <!-- 装飾用ライトエフェクト -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-600/5 rounded-full blur-[100px]"></div>
+        
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
+                <!-- 左側: ロゴとタグライン -->
+                <div class="max-w-sm">
+                    <div class="flex items-center space-x-3 mb-8">
+                        <div class="w-10 h-10 bg-gradient-to-tr from-cyan-400 to-pink-500 rounded-xl shadow-lg shadow-cyan-500/20"></div>
+                        <div class="font-en font-black text-3xl tracking-tighter text-white uppercase italic">ISCT-SE <span class="text-xs font-normal opacity-40 italic">Fes 2024</span></div>
+                    </div>
+                    <p class="text-gray-500 text-xs leading-loose tracking-[0.1em] mb-8">
+                        BEYOND THE BORDER. 情報科学専門学校の学生たちが創り出す、技術と創造力の祭典。境界を超え、新しい可能性に触れる2日間。
+                    </p>
+                    <!-- SNSリンク -->
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-600 hover:text-cyan-400 transition transform hover:-translate-y-1">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-pink-400 transition transform hover:-translate-y-1">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 右側: カテゴリ別リンク -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-16 md:gap-24">
+                    <div>
+                        <h5 class="text-[10px] font-en font-black tracking-[0.4em] text-cyan-400 uppercase mb-8 italic">Section</h5>
+                        <ul class="space-y-5 text-[11px] font-bold tracking-widest text-gray-500 uppercase">
+                            <li><a href="#home" class="hover:text-white transition">Home</a></li>
+                            <li><a href="#about" class="hover:text-white transition">About</a></li>
+                            <li><a href="#contents" class="hover:text-white transition">Contents</a></li>
+                            <li><a href="#timetable" class="hover:text-white transition">Timetable</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-[10px] font-en font-black tracking-[0.4em] text-pink-400 uppercase mb-8 italic">Guide</h5>
+                        <ul class="space-y-5 text-[11px] font-bold tracking-widest text-gray-500 uppercase">
+                            <li><a href="#access" class="hover:text-white transition">Access</a></li>
+                            <li><a href="#news" class="hover:text-white transition">News</a></li>
+                            <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="hidden md:block">
+                        <h5 class="text-[10px] font-en font-black tracking-[0.4em] text-yellow-400 uppercase mb-8 italic">Utility</h5>
+                        <ul class="space-y-5 text-[11px] font-bold tracking-widest text-gray-500 uppercase">
+                            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-white transition">Terms</a></li>
+                            <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最下部: 著作権表示と補助リンク -->
+            <div class="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/5 gap-8">
+                <p class="text-[9px] tracking-[0.4em] text-gray-600 uppercase">
+                    © 2024 ISCT-SE & TECHSPRESSO LLC. ALL RIGHTS RESERVED.
+                </p>
+                <div class="flex space-x-12 text-[9px] tracking-[0.4em] text-gray-600 uppercase">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 80) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
+            }
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => { mobileMenu.classList.toggle('active'); });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => { mobileMenu.classList.remove('active'); });
+        });
+    </script>
+</body>
+</html>
